@@ -10,11 +10,11 @@ clc
 %% Model parameters
 d           =       0.235;      %distance between two wheels [m]
 r           =       0.036;      %radius robot's wheels [m]
-rob_diam    =       0.3485;     %robot's size 
+rob_diam    =       0.3485;     %robot's size [m]
 th          =       [r;d];
 
 %% Envinroment parameters
-n_obs   =       7;           %number of obstacle           
+n_obs   =       7;           %number of obstacles           
 h_map   =       8;           %height of the map
 w_map   =       10;          %width of the map
 
@@ -26,9 +26,9 @@ obs               =     [xc,yc,rad];
 start = [0;0;0];        
 goal = [9;7;0];
 
-%% FHOCP parameters - Multiple Shooting
-Ts      =       0.2;                % seconds, input sampling period
-Tend    =       20;                 % seconds, terminal time
+%% FHOCP parameters - Single Shooting
+Ts      =       0.5;                % seconds, input sampling period
+Tend    =       15;                 % seconds, terminal time
 Np      =       15;            % prediction horizon
 
 %% Initialize optimization variables
@@ -42,8 +42,8 @@ b               =   [];
                        
 %% Constraints
 %Bounds on input variables
-omega_max   =       2.75*2; %[rad/s]
-v_max       =       0.324*2; %[m/s]      
+omega_max   =       5.5; %[rad/s]
+v_max       =       0.648; %[m/s]      
 C           =       [-eye(2*Np)
                     eye(2*Np)];
 d           =       [ones(Np,1)*-v_max;

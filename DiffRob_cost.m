@@ -9,7 +9,7 @@ u_in               =       [x(1:Np,1)';
 xc              =       ones(Np+1,n_obs);
 yc              =       ones(Np+1,n_obs);
 r               =       ones(Np+1,n_obs);
-safety_dist     =       0.5;         %safety distance from obstacles
+safety_dist     =       0.3;         %safety distance from obstacles
 
 for i=1:n_obs
     xc(:,i)      =  round(xc(:,i).*obs(i,1),1);
