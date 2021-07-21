@@ -9,12 +9,12 @@ u_in               =       [x(1:Np,1)';
 xc              =       ones(Np+1,n_obs);
 yc              =       ones(Np+1,n_obs);
 r               =       ones(Np+1,n_obs);
-safety_dist     =       0.3;         %safety distance from obstacles
+safety_dist     =       0.3485/2;         %safety distance from obstacles
 
 for i=1:n_obs
-    xc(:,i)      =  round(xc(:,i).*obs(i,1),1);
-    yc(:,i)      =  round(yc(:,i).*obs(i,2),1);
-    r(:,i)       =  round(r(:,i).*obs(i,3)) + safety_dist;
+    xc(:,i)      =  xc(:,i).*obs(i,1);
+    yc(:,i)      =  yc(:,i).*obs(i,2);
+    r(:,i)       =  r(:,i).*obs(i,3) + safety_dist;
 end
 
 %% Run simulation with FFD
@@ -36,21 +36,26 @@ traj_ref    =   [ones(size(X_sim))*x_goal;ones(size(Y_sim))*y_goal];
 %% Compute path constraints h(x)
 h=zeros((Np+1)*n_obs,1);
 for i=1:n_obs
-    h((i-1)*Np+i:i*Np+i,1) = (Y_sim-yc(:,i)).^2+(X_sim-xc(:,i)).^2-r(:,i).^2;
+    h((i-1)*Np+i:i*Np+i,1) = sqrt((Y_sim-yc(:,i)).^2+(X_sim-xc(:,i)).^2)-r(:,i);
 end
+h=[h;X_sim;Y_sim;(10-0.1742)-X_sim;(8-0.1742)-Y_sim];
+
 
 %% Compute cost function f(x)
-delta_diff      =   [traj_ref(1:Np-1,1)-traj_sim(1:Np-1,1);     
-                        traj_ref(Np+1:2*Np-1,1)-traj_sim(Np+1:2*Np-1,1)];
-delta_end       =   [traj_ref(Np,1)-traj_sim(Np,1);
-                   traj_ref(2*Np,1)-traj_sim(2*Np,1)];
+% delta_diff      =   [traj_ref(1:Np-1,1)-traj_sim(1:Np-1,1);     
+%                         traj_ref(Np+1:2*Np-1,1)-traj_sim(Np+1:2*Np-1,1)];
+% delta_end       =   [traj_ref(Np,1)-traj_sim(Np,1);
+%                    traj_ref(2*Np,1)-traj_sim(2*Np,1)];
+ delta_diff =              [traj_ref(1:Np,1)-traj_sim(1:Np,1);     
+                         traj_ref(Np+1:2*Np,1)-traj_sim(Np+1:2*Np,1)];
 ctrl_effort     =   [u_in(1,:)';u_in(2,:)'];
-Q               =   eye(2*Np-2,2*Np-2);
-S               =   eye(2,2);
+%Q               =   eye(2*Np-2,2*Np-2);
+Q = eye(2*Np,2*Np);
+%S               =   eye(2,2);
 R               =   eye(2*Np,2*Np);
 
-f               =   (delta_diff'*Q*delta_diff)+(delta_end'*S*delta_end)+(ctrl_effort'*R*ctrl_effort);
-
+%f               =   (delta_diff'*Q*delta_diff)+(delta_end'*S*delta_end)+(ctrl_effort'*R*ctrl_effort);
+f=(delta_diff'*Q*delta_diff)+(ctrl_effort'*R*ctrl_effort);
 %% Stack cost and constraints
 v           =   [f;h];
 

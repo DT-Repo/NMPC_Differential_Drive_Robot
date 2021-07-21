@@ -14,21 +14,27 @@ rob_diam    =       0.3485;     %robot's size [m]
 th          =       [r;d];
 
 %% Envinroment parameters
-n_obs   =       7;           %number of obstacles           
+n_obs   =       10;           %number of obstacles           
 h_map   =       8;           %height of the map
 w_map   =       10;          %width of the map
 
 %% Generate map
 %generate a map with random obstacles shaped as circles
-[x_,y_,xc,yc,rad]   =     generate_map(w_map,h_map,n_obs);
+%[x_,y_,xc,yc,rad]   =     generate_map(w_map,h_map,n_obs);
+load('x_');
+load('y_');
+load('xc');
+load('yc');
+load('rad');
+safety_dist     =       0.3485/2;
 obs               =     [xc,yc,rad];
 %% Define start and goal
-start = [0;0;0];        
+start = [rob_diam/2;rob_diam/2;0];        
 goal = [9;7;0];
 
 %% FHOCP parameters - Single Shooting
-Ts      =       0.5;                % seconds, input sampling period
-Tend    =       15;                 % seconds, terminal time
+Ts      =       0.4;                % seconds, input sampling period
+Tend    =       20;                 % seconds, terminal time
 Np      =       15;            % prediction horizon
 
 %% Initialize optimization variables
@@ -53,7 +59,7 @@ d           =       [ones(Np,1)*-v_max;
 
              
              
-q           =        n_obs*(Np+1);            % Number of nonlinear inequality constraints
+q           =        n_obs*(Np+1)+(Np+1)*4;            % Number of nonlinear inequality constraints
 
 %% Setup Solver options
 
@@ -67,7 +73,7 @@ myoptions.ls_c          =	.1;
 myoptions.ls_nitermax   =	1e2;
 myoptions.nitermax      =	1e3;
 myoptions.xsequence     =	'off';
-
+myoptions.display    	=	'Iter';
 % Define conditions to shift Horizon Window 
 t0       =       0;
 t(1)     =       t0;
