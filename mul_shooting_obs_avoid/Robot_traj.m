@@ -78,7 +78,7 @@ end
 figure
 subplot(221)
 stairs(t,u_cl(:,1),'k','linewidth',1.5); axis([0 t(end) -0.5 0.5])
-ylabel('v (rad/s)')
+ylabel('v (m/s)')
 xlabel('time (seconds)')
 grid on
 subplot(222)

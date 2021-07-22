@@ -35,7 +35,7 @@ goal = [9;7;0];
 %% FHOCP parameters - Single Shooting
 Ts      =       0.4;                % seconds, input sampling period
 Tend    =       20;                 % seconds, terminal time
-Np      =       15;            % prediction horizon
+Np      =       5;            % prediction horizon
 
 %% Initialize optimization variables
 x0      =       [ zeros(Np,1);      % inputs: omega_L(rad/s) and omega_R(rad/s)
@@ -89,6 +89,7 @@ xx1     =        [];        % plot results
 
 
 %% Non Linear MPC Strategy
+mpc_loop = tic;
 while(norm((st_0(1:3,1)-st_ref(1:3,1)),2) > 1e-2 && n_iter < Tend / Ts)
 x0 = u0;
 % Solve FHOCP
@@ -118,6 +119,8 @@ xx(:,n_iter+2) = st_0; %store state after executed u_mpc for visualization
 n_iter
 n_iter = n_iter + 1;
 end
-
+mpc_time = toc(mpc_loop);
+error = norm(st_0-st_ref,2)
+average_mpc_time = mpc_time/(n_iter+1)
 %% Show results
 Robot_traj (t,xx,xx1,u_cl,st_ref,Np,rob_diam,x_,y_,w_map,h_map,th) % a drawing function
