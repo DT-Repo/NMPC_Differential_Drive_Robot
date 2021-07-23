@@ -42,19 +42,12 @@ h=[h;X_sim;Y_sim;(10-0.1742)-X_sim;(8-0.1742)-Y_sim];
 
 
 %% Compute cost function f(x)
-% delta_diff      =   [traj_ref(1:Np-1,1)-traj_sim(1:Np-1,1);     
-%                         traj_ref(Np+1:2*Np-1,1)-traj_sim(Np+1:2*Np-1,1)];
-% delta_end       =   [traj_ref(Np,1)-traj_sim(Np,1);
-%                    traj_ref(2*Np,1)-traj_sim(2*Np,1)];
- delta_diff =              [traj_ref(1:Np,1)-traj_sim(1:Np,1);     
-                         traj_ref(Np+1:2*Np,1)-traj_sim(Np+1:2*Np,1)];
-ctrl_effort     =   [u_in(1,:)';u_in(2,:)'];
-%Q               =   eye(2*Np-2,2*Np-2);
-Q = 5*eye(2*Np,2*Np);
-%S               =   eye(2,2);
-R               =   eye(2*Np,2*Np);
-
-%f               =   (delta_diff'*Q*delta_diff)+(delta_end'*S*delta_end)+(ctrl_effort'*R*ctrl_effort);
+ delta_diff =              [traj_ref(1:Np+1,1)-traj_sim(1:Np+1,1);     
+                         traj_ref(Np+2:2*Np+2,1)-traj_sim(Np+2:2*Np+2,1)];
+ctrl_effort     =   [u_in(1,2:end)'-u_in(1,1:end-1)';u_in(2,2:end)'-u_in(2,1:end-1)'];  % variation 
+%ctrl_effort     =   [u_in(1,:)';u_in(2,:)'];                   no variation
+Q = 5*eye(2*Np+2,2*Np+2);
+R               =   5*eye(2*Np-2,2*Np-2);
 f=(delta_diff'*Q*delta_diff)+(ctrl_effort'*R*ctrl_effort);
 %% Stack cost and constraints
 v           =   [f;h];
