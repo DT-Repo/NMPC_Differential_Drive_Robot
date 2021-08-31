@@ -49,7 +49,6 @@ xi_opt = [x_opt;y_opt;th_opt];
 delta_diff      =   [traj_ref(1:Np,1)-xi_opt(1:Np,1);     
                         traj_ref(Np+2:2*Np+1,1)-xi_opt(Np+2:2*Np+1,1)
                         ];
-%traj_ref(2*Np+3:3*Np+2,1)-xi_opt(2*Np+3:3*Np+2,1)
 delta_end       =   [traj_ref(Np+1,1)-xi_opt(Np+1,1);
                    traj_ref(2*Np+2,1)-xi_opt(2*Np+2,1);
                    traj_ref(3*Np+3,1)-xi_opt(3*Np+3,1)];
@@ -58,8 +57,10 @@ Q               =   eye(2*Np,2*Np);
 S               =   10^3*eye(3,3);
 R               =   eye(2*Np,2*Np);
 
-f               =   (delta_diff'*Q*delta_diff)+(delta_end'*S*delta_end)+(ctrl_effort'*R*ctrl_effort);
-
+%f               =   (delta_diff'*Q*delta_diff)+(delta_end'*S*delta_end)+(ctrl_effort'*R*ctrl_effort);
+f               = [delta_diff;
+                    delta_end.*[4;4;4];
+                    ctrl_effort];
 %% Stack cost and constraints
 v           =   [f;h];
 

@@ -8,28 +8,33 @@ close all
 clc
 
 %% Model parameters
-d           =       0.235;      %distance between two wheels [m]
+base        =       0.235;      %distance between two wheels [m]
 r           =       0.036;      %radius robot's wheels [m]
 rob_diam    =       0.3485;     %robot's size [m]
-th          =       [r;d];
+th          =       [r;base];
 
 %% Envinroment parameters
-n_obs   =       7;           %number of obstacles           
+n_obs   =       12;           %number of obstacles           
 h_map   =       8;           %height of the map
 w_map   =       10;          %width of the map
 
 %% Generate map
 %generate a map with random obstacles shaped as circles
-[x_,y_,xc,yc,rad]   =     generate_map(w_map,h_map,n_obs);
+%[x_,y_,xc,yc,rad]   =     generate_map(w_map,h_map,n_obs);
+load('x_test');
+ load('y_test');
+ load('xc_test');
+ load('yc_test');
+ load('rad_test');
 obs               =     [xc,yc,rad];
 %% Define start and goal
 start = [rob_diam/2;rob_diam/2;0];        
-goal = [6;7;0];
+goal = [8;7;0];
 
 %% FHOCP parameters - Single Shooting
 Ts      =       0.5;                % seconds, input sampling period
-Tend    =       30;                 % seconds, terminal time
-Np      =       12;            % prediction horizon
+Tend    =       40;                 % seconds, terminal time
+Np      =       8;            % prediction horizon
 
 %% Initialize optimization variables
 x0      =       [ zeros(Np,1);      % inputs: v(m/s) and omega(rad/s)
@@ -45,9 +50,10 @@ b               =   [];
                        
 %% Constraints
 %Bounds on input variables
-omega_max   =       5.5; %[rad/s]
-v_max       =       0.648; %[m/s]  
-
+% omega_max   =       5.5; %[rad/s]
+% v_max       =       0.648; %[m/s]  
+omega_max   =       2.34; %[rad/s]
+v_max       =       0.55; %[m/s] 
 C           =       [-eye(5*Np);
                     eye(5*Np)];
 d           =       [ones(Np,1)*-v_max;
@@ -66,7 +72,8 @@ q           =        n_obs*(Np+1);            % Number of nonlinear inequality c
 %% Setup Solver options
 
 myoptions               =   myoptimset;
-myoptions.Hessmethod  	=	'BFGS';
+myoptions.Hessmethod  	=	'GN';
+%myoptions.Hessmethod  	=	'BFGS';
 myoptions.gradmethod  	=	'CD';
 myoptions.graddx        =	2^-17;
 myoptions.tolgrad    	=	1e-8;
@@ -95,6 +102,7 @@ x_opt =zeros(Np*3,1);
 mpc_loop = tic;
 while(norm((st_0-st_ref),2) > 1e-2 && n_iter < Tend / Ts)
     x0 = [u0;x_opt];
+    myoptions.GN_funF = @(x)DiffRob_cost(x,Ts,Np,th,obs,n_obs,goal,st_0);
     % Solve FHOCP
     [xstar,fxstar,niter,exitflag,xsequence] = myfmincon(@(x)DiffRob_cost(x,Ts,Np,th,obs,n_obs,st_ref,st_0),x0,[],[],C,d,0,q,myoptions);
     u = xstar(1:2*Np,1);

@@ -77,24 +77,24 @@ end
 
 figure
 subplot(221)
-stairs(t,u_cl(:,1),'k','linewidth',1.5); axis([0 t(end) -0.5 0.5])
+stairs(t,u_cl(:,1),'k','linewidth',1.5); axis([0 t(end) -0.8 0.8])
 ylabel('v (m/s)')
 xlabel('time (seconds)')
 grid on
 subplot(222)
-stairs(t,u_cl(:,2),'r','linewidth',1.5); axis([0 t(end) -9 9])
+stairs(t,u_cl(:,2),'r','linewidth',1.5); axis([0 t(end) -2 2])
 xlabel('time (seconds)')
 ylabel('\omega (rad/s)')
 grid on
 subplot(223)
 omega_R = (u_cl(:,1) + u_cl(:,2)*(d/2))/r;
-stairs(t,omega_R,'k','linewidth',1.5); axis([0 t(end) -9 9])
+stairs(t,omega_R,'k','linewidth',1.5); axis([0 t(end) -8 8])
 ylabel('\omega_R (rad/s)')
 xlabel('time (seconds)')
 grid on
 subplot(224)
 omega_L = (u_cl(:,1) - u_cl(:,2)*(d/2))/r;
-stairs(t,omega_L,'k','linewidth',1.5); axis([0 t(end) -9 9])
+stairs(t,omega_L,'k','linewidth',1.5); axis([0 t(end) -8 8])
 ylabel('\omega_L (rad/s)')
 xlabel('time (seconds)')
 grid on
