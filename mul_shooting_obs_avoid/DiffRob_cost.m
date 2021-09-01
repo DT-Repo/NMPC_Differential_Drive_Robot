@@ -53,14 +53,16 @@ delta_end       =   [traj_ref(Np+1,1)-xi_opt(Np+1,1);
                    traj_ref(2*Np+2,1)-xi_opt(2*Np+2,1);
                    traj_ref(3*Np+3,1)-xi_opt(3*Np+3,1)];
 ctrl_effort     =   [u_in(1,:)';u_in(2,:)'];
+% BFGS Cost Function
 Q               =   eye(2*Np,2*Np);
 S               =   10^3*eye(3,3);
 R               =   eye(2*Np,2*Np);
-
 %f               =   (delta_diff'*Q*delta_diff)+(delta_end'*S*delta_end)+(ctrl_effort'*R*ctrl_effort);
+
+% GN Cost Function
 f               = [delta_diff;
-                    delta_end.*[4;4;4];
-                    ctrl_effort];
+                    delta_end.*5;
+                    ctrl_effort.*2];
 %% Stack cost and constraints
 v           =   [f;h];
 

@@ -20,12 +20,21 @@ w_map   =       10;          %width of the map
 
 %% Generate map
 %generate a map with random obstacles shaped as circles
-%[x_,y_,xc,yc,rad]   =     generate_map(w_map,h_map,n_obs);
-load('x_test');
- load('y_test');
- load('xc_test');
- load('yc_test');
- load('rad_test');
+%[x_,y_,xc,yc,rad]   =     generate_map(w_map,h_map,n_obs);     
+
+load('.\easy_map\x_test.mat');
+load('.\easy_map\y_test.mat');
+load('.\easy_map\xc_test.mat');
+load('.\easy_map\yc_test.mat');
+load('.\easy_map\rad_test.mat');
+
+%hard map contains n_obs=15
+% load('.\hard_map\x_test2.mat');
+% load('.\hard_map\y_test2.mat');
+% load('.\hard_map\xc_test2.mat');
+% load('.\hard_map\yc_test2.mat');
+% load('.\hard_map\rad_test2.mat');
+
 obs               =     [xc,yc,rad];
 %% Define start and goal
 start = [rob_diam/2;rob_diam/2;0];        
@@ -33,7 +42,7 @@ goal = [8;7;0];
 
 %% FHOCP parameters - Single Shooting
 Ts      =       0.5;                % seconds, input sampling period
-Tend    =       40;                 % seconds, terminal time
+Tend    =       50;                 % seconds, terminal time
 Np      =       8;            % prediction horizon
 
 %% Initialize optimization variables
@@ -50,8 +59,6 @@ b               =   [];
                        
 %% Constraints
 %Bounds on input variables
-% omega_max   =       5.5; %[rad/s]
-% v_max       =       0.648; %[m/s]  
 omega_max   =       2.34; %[rad/s]
 v_max       =       0.55; %[m/s] 
 C           =       [-eye(5*Np);
@@ -60,12 +67,12 @@ d           =       [ones(Np,1)*-v_max;
                     ones(Np,1)*-omega_max;
                     ones(Np,1)*-10+rob_diam/2;
                     ones(Np,1)*-8+rob_diam/2;
-                    ones(Np,1)*-pi;
+                    ones(Np,1)*-pi*2/3;
                     ones(Np,1)*-v_max;
                     ones(Np,1)*-omega_max;
                     ones(Np,1)*0+rob_diam/2;
                     ones(Np,1)*0+rob_diam/2;
-                    ones(Np,1)*-pi];
+                    ones(Np,1)*-pi*2/3];
         
 q           =        n_obs*(Np+1);            % Number of nonlinear inequality constraints
 
@@ -100,7 +107,7 @@ x_opt =zeros(Np*3,1);
 
 %% Non Linear MPC Strategy
 mpc_loop = tic;
-while(norm((st_0-st_ref),2) > 1e-2 && n_iter < Tend / Ts)
+while(norm((st_0-st_ref),2) > 1e-1 && n_iter < Tend / Ts)
     x0 = [u0;x_opt];
     myoptions.GN_funF = @(x)DiffRob_cost(x,Ts,Np,th,obs,n_obs,goal,st_0);
     % Solve FHOCP
@@ -137,7 +144,7 @@ while(norm((st_0-st_ref),2) > 1e-2 && n_iter < Tend / Ts)
     n_iter = n_iter + 1;
 end
 mpc_time = toc(mpc_loop);
-error = norm(st_0-st_ref,2)
+error = norm(st_0(1:2,1)-st_ref(1:2,1),2)
 average_mpc_time = mpc_time/(n_iter+1)
 
 %% Show results

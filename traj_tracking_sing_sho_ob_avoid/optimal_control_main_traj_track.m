@@ -22,11 +22,12 @@ w_map   =       10;          %width of the map
 %generate a map with random obstacles shaped as circles
 % [x_,y_,xc,yc,rad]   =     generate_map(w_map,h_map,n_obs);
 
-load('x_');
-load('y_');
-load('xc');
-load('yc');
-load('rad');
+load('.\traj_map\x_.mat');
+load('.\traj_map\y_.mat');
+load('.\traj_map\xc.mat');
+load('.\traj_map\yc.mat');
+load('.\traj_map\rad.mat');
+
 obs               =     [xc,yc,rad];
 %% Define start and goal and load planned path
 load('path');                       %Path planned for Np=12, you need to replan otherwise
@@ -60,7 +61,7 @@ q           =        n_obs*(Np+1)+(Np+1)*6;            % Number of nonlinear ine
 %% Setup Solver options
 myoptions               =   myoptimset;
 myoptions.Hessmethod  	=	'GN';
-myoptions.gradmethod  	=	'FD';
+myoptions.gradmethod  	=	'CD';
 myoptions.graddx        =	2^-17;
 myoptions.tolgrad    	=	1e-8;
 myoptions.ls_beta       =	0.5;
@@ -123,7 +124,7 @@ while(norm((st_0(1:2,1)-st_ref(1:2,1)),2) > 1e-1 && n_iter < Tend / Ts)
     n_iter = n_iter + 1;    
 end
 mpc_time = toc(mpc_loop);
-error = norm(st_0-st_ref,2)
+error = norm(st_0(1:2,1)-st_ref(1:2,1),2)
 average_mpc_time = mpc_time/(n_iter+1)
 %% Show results
 Robot_traj (t,xx,xx1,u_cl,st_ref,Np,rob_diam,x_,y_,w_map,h_map,th,path) % show computed trajectory

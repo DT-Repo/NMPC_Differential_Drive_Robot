@@ -40,7 +40,7 @@ h=zeros((Np+1)*n_obs,1);
 for i=1:n_obs
     h((i-1)*Np+i:i*Np+i,1) = sqrt((Y_sim-yc(:,i)).^2+(X_sim-xc(:,i)).^2) - r(:,i);
 end
-h=[h;X_sim;Y_sim;(10-0.1742)-X_sim;(8-0.1742)-Y_sim;-TH_sim+pi;TH_sim+pi];
+h=[h;X_sim;Y_sim;(10-0.1742)-X_sim;(8-0.1742)-Y_sim;-TH_sim+2*pi/3;TH_sim+2*pi/3];
 
 
 %% Compute cost function f(x)
@@ -50,14 +50,17 @@ delta_end       =   [traj_ref(Np,1)-traj_sim(Np,1);
                    traj_ref(2*Np,1)-traj_sim(2*Np,1);
                    traj_ref(3*Np,1)-traj_sim(3*Np,1)];
 ctrl_effort     =   [u_in(1,:)';u_in(2,:)'];
+% BFGS Cost Function
 Q               =   eye(2*Np-2,2*Np-2);
 S               =   10^3*eye(3,3);
 R               =   eye(2*Np,2*Np);
-%delta_end = delta_end;
+
 %f               =   (delta_diff'*Q*delta_diff)+(delta_end'*S*delta_end)+(ctrl_effort'*R*ctrl_effort);
+
+% GN Cost Function
 f               = [delta_diff;
-                    delta_end.*[4;4;4];
-                      ctrl_effort];
+                    delta_end.*5;
+                    ctrl_effort.*2];                  
 %% Stack cost and constraints
 v           =   [f;h];
 
