@@ -16,7 +16,7 @@ xi_opt             =    [x_opt;y_opt;th_opt];
 xc              =       ones(Np+1,n_obs);
 yc              =       ones(Np+1,n_obs);
 r               =       ones(Np+1,n_obs);
-safety_dist     =       0.3;         %safety distance from obstacles
+safety_dist     =       0.25;         %safety distance from obstacles
 
 for i=1:n_obs
     xc(:,i)      =  xc(:,i).*obs(i,1);

@@ -22,18 +22,19 @@ w_map   =       10;          %width of the map
 %generate a map with random obstacles shaped as circles
 %[x_,y_,xc,yc,rad]   =     generate_map(w_map,h_map,n_obs);     
 
-load('.\easy_map\x_test.mat');
-load('.\easy_map\y_test.mat');
-load('.\easy_map\xc_test.mat');
-load('.\easy_map\yc_test.mat');
-load('.\easy_map\rad_test.mat');
+load('..\single_shooting_obs_avoid\easy_map\x_test.mat');
+load('..\single_shooting_obs_avoid\easy_map\y_test.mat');
+load('..\single_shooting_obs_avoid\easy_map\xc_test.mat');
+load('..\single_shooting_obs_avoid\easy_map\yc_test.mat');
+load('..\single_shooting_obs_avoid\easy_map\rad_test.mat');
 
-%hard map contains n_obs=15
-% load('.\hard_map\x_test2.mat');
-% load('.\hard_map\y_test2.mat');
-% load('.\hard_map\xc_test2.mat');
-% load('.\hard_map\yc_test2.mat');
-% load('.\hard_map\rad_test2.mat');
+% hard map contains n_obs=15
+% load('..\single_shooting_obs_avoid\easy_map\x_test2.mat');
+% load('..\single_shooting_obs_avoid\easy_map\y_test2.mat');
+% load('..\single_shooting_obs_avoid\easy_map\xc_test2.mat');
+% load('..\single_shooting_obs_avoid\easy_map\yc_test2.mat');
+% load('..\single_shooting_obs_avoid\easy_map\rad_test2.mat');
+
 
 obs               =     [xc,yc,rad];
 %% Define start and goal
