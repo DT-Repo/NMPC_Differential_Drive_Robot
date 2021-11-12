@@ -6,6 +6,7 @@ Single Shooting -> it takes into account only control actions as optimization va
 Multiple Shooting -> it uses also trajectory states as optimziation variables.
 
 Furthermore a comparison between these two approaches is given. All solutions are computed by means of *fmincon* of MATLAB®.
+
 An example of Trajectory Tracking Optimized is showed in the following figure:
 
 ![alt text](https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/traj_trek.svg?raw=true)
