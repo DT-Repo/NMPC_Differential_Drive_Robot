@@ -6,5 +6,5 @@ Single Shooting -> it takes into account only control actions as optimization va
 Multiple Shooting -> it uses also trajectory states as optimziation variables.
 
 Furthermore a comparison between these two approaches is given.
-![plot](https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/traj_trek.svg?raw=true)
+![alt text](https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/traj_trek.svg?raw=true)
  
