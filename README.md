@@ -7,5 +7,6 @@ Multiple Shooting -> it uses also trajectory states as optimziation variables.
 
 Furthermore a comparison between these two approaches is given.
 An example of Trajectory Tracking Optimized is showed in the following figure:
+
 ![alt text](https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/traj_trek.svg?raw=true)
  
