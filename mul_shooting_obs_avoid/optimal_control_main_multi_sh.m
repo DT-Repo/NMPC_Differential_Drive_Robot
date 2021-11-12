@@ -27,13 +27,13 @@ load('..\single_shooting_obs_avoid\easy_map\y_test.mat');
 load('..\single_shooting_obs_avoid\easy_map\xc_test.mat');
 load('..\single_shooting_obs_avoid\easy_map\yc_test.mat');
 load('..\single_shooting_obs_avoid\easy_map\rad_test.mat');
-
+n_obs   =       15;           %number of obstacles 
 % hard map contains n_obs=15
-% load('..\single_shooting_obs_avoid\easy_map\x_test2.mat');
-% load('..\single_shooting_obs_avoid\easy_map\y_test2.mat');
-% load('..\single_shooting_obs_avoid\easy_map\xc_test2.mat');
-% load('..\single_shooting_obs_avoid\easy_map\yc_test2.mat');
-% load('..\single_shooting_obs_avoid\easy_map\rad_test2.mat');
+load('..\single_shooting_obs_avoid\hard_map\x_test2.mat');
+load('..\single_shooting_obs_avoid\hard_map\y_test2.mat');
+load('..\single_shooting_obs_avoid\hard_map\xc_test2.mat');
+load('..\single_shooting_obs_avoid\hard_map\yc_test2.mat');
+load('..\single_shooting_obs_avoid\hard_map\rad_test2.mat');
 
 
 obs               =     [xc,yc,rad];
@@ -68,12 +68,12 @@ d           =       [ones(Np,1)*-v_max;
                     ones(Np,1)*-omega_max;
                     ones(Np,1)*-10+rob_diam/2;
                     ones(Np,1)*-8+rob_diam/2;
-                    ones(Np,1)*-pi*2/3;
+                    ones(Np,1)*-pi/6;
                     ones(Np,1)*-v_max;
                     ones(Np,1)*-omega_max;
                     ones(Np,1)*0+rob_diam/2;
                     ones(Np,1)*0+rob_diam/2;
-                    ones(Np,1)*-pi*2/3];
+                    ones(Np,1)*-pi/6];
         
 q           =        n_obs*(Np+1);            % Number of nonlinear inequality constraints
 

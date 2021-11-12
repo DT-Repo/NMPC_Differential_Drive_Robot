@@ -60,7 +60,7 @@ q           =        n_obs*(Np+1)+(Np+1)*6;            % Number of nonlinear ine
 
 %% Setup Solver options
 myoptions               =   myoptimset;
-myoptions.Hessmethod  	=	'GN';
+myoptions.Hessmethod  	=	'BFGS';
 myoptions.gradmethod  	=	'CD';
 myoptions.graddx        =	2^-17;
 myoptions.tolgrad    	=	1e-8;
@@ -86,6 +86,7 @@ xx1     =        [];        % plot results
 %% Non Linear MPC Strategy
 mpc_loop = tic;
 cont = 0;
+error = 0;
 while(norm((st_0(1:2,1)-st_ref(1:2,1)),2) > 1e-1 && n_iter < Tend / Ts)
     x0 = u0;
     %Select Path Horizon for each iteration
@@ -95,7 +96,7 @@ while(norm((st_0(1:2,1)-st_ref(1:2,1)),2) > 1e-1 && n_iter < Tend / Ts)
     else
         path_temp=[ones(Np+1,1)*goal(1,1),ones(Np+1,1)*goal(2,1)];
     end
-    myoptions.GN_funF = @(x)DiffRob_cost(x,Ts,Np,th,obs,n_obs,goal,st_0,path_temp);
+    %myoptions.GN_funF = @(x)DiffRob_cost(x,Ts,Np,th,obs,n_obs,goal,st_0,path_temp);
     % Solve FHOCP
     [xstar,fxstar,niter,exitflag,xsequence] = myfmincon(@(x)DiffRob_cost(x,Ts,Np,th,obs,n_obs,st_ref,st_0,path_temp),x0,[],[],C,d,0,q,myoptions);
     u = xstar;
@@ -105,7 +106,7 @@ while(norm((st_0(1:2,1)-st_ref(1:2,1)),2) > 1e-1 && n_iter < Tend / Ts)
 
     xi_sim      =   zeros(3,Np+1);
     xi_sim(:,1) =   st_0;
-
+    
     % Compute Optimal Trajectory for visualization purposes
     for ind=1:Np+1
         xidot               =     diff_drive(0,xi_sim(:,ind),ustar,th);
@@ -123,8 +124,9 @@ while(norm((st_0(1:2,1)-st_ref(1:2,1)),2) > 1e-1 && n_iter < Tend / Ts)
     n_iter
     n_iter = n_iter + 1;    
 end
+error
 mpc_time = toc(mpc_loop);
-error = norm(st_0(1:2,1)-st_ref(1:2,1),2)
+%error = norm(st_0(1:2,1)-st_ref(1:2,1),2)
 average_mpc_time = mpc_time/(n_iter+1)
 %% Show results
 Robot_traj (t,xx,xx1,u_cl,st_ref,Np,rob_diam,x_,y_,w_map,h_map,th,path) % show computed trajectory

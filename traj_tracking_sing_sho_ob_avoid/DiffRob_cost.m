@@ -51,11 +51,11 @@ ctrl_effort     =   [u_in(1,2:end)'-u_in(1,1:end-1)';u_in(2,2:end)'-u_in(2,1:end
 % BFGS Cost Function
 Q = 20*eye(2*Np+2,2*Np+2);
 R               =   10*eye(2*Np-2,2*Np-2);
-%f=(delta_diff'*Q*delta_diff)+(ctrl_effort'*R*ctrl_effort);
+f=(delta_diff'*Q*delta_diff)+(ctrl_effort'*R*ctrl_effort);
 
 % GN Cost Function
-f               = [delta_diff;
-                    ctrl_effort];
+%f               = [delta_diff;
+%                    ctrl_effort];
 %% Stack cost and constraints
 v           =   [f;h];
 
