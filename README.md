@@ -13,6 +13,6 @@ Furthermore a comparison between these two approaches is given. All solutions ar
 
 
 An example of Trajectory Tracking Optimized is showed in the following figure:
+<img src="[https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/single_comp.svg](https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/traj_trek.svg?raw=true)" width="500" height="500">
 
-![alt text](https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/traj_trek.svg?raw=true)
  
