@@ -6,8 +6,8 @@ Two posible direct approaches are used in the N-MPC :
 * Multiple Shooting -> it uses also trajectory states as optimziation variables.
 
 Furthermore a comparison between these two approaches is given. All solutions are computed by means of *fmincon* of MATLAB®.
-|# Single Shooting | # Multiple Shooting |
- 
+|Single Shooting |Multiple Shooting |
+| ------------- | ------------- |
 |<img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/single_comp.svg" width="500" height="500"> | <img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/multi_comp.svg" width="500" height="500"> |
 
 
