@@ -6,11 +6,12 @@ Two posible direct approaches are used in the N-MPC :
 * Multiple Shooting -> it uses also trajectory states as optimziation variables.
 
 Furthermore a comparison between these two approaches is given. All solutions are computed by means of *fmincon* of MATLAB®.
-# Single Shooting 
-<img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/single_comp.svg" width="500" height="500">
+|# Single Shooting | # Multiple Shooting |
+ 
+|<img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/single_comp.svg" width="500" height="500"> | <img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/multi_comp.svg" width="500" height="500"> |
 
-# Multiple Shooting
-<img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/multi_comp.svg" width="500" height="500">
+
+
 An example of Trajectory Tracking Optimized is showed in the following figure:
 
 ![alt text](https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/traj_trek.svg?raw=true)
