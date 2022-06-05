@@ -7,7 +7,7 @@ Two posible direct approaches are used in the N-MPC :
 
 Furthermore a comparison between these two approaches is given. All solutions are computed by means of *fmincon* of MATLAB®.
 # Single Shooting 
-![alt text](https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/single_comp.svg | width=200 | height=200)
+![alt text](https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/single_comp.svg =200x200)
 # Multiple Shooting
 An example of Trajectory Tracking Optimized is showed in the following figure:
 
