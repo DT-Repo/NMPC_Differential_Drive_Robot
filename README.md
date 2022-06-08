@@ -11,7 +11,7 @@ Two possible direct approaches are used with the N-MPC strategy :
 **Problem formulation:**
 <img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/multiple.PNG">
 
-Furthermore a comparison between these two approaches is given. All solutions are computed by means of *fmincon* in MATLAB®.
+Furthermore a comparison between these two approaches, when the same finite horizon is imposed, is given. All solutions are computed by means of *fmincon* in MATLAB®.
 ## Point Stabilization
 |Single Shooting |Multiple Shooting |
 | ------------- | ------------- |
