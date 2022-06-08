@@ -11,15 +11,16 @@ Two possible direct approaches are used with the N-MPC strategy :
 **Problem formulation:**
 <img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/multiple.PNG">
 
-Furthermore a comparison between these two approaches is given. All solutions are computed by means of *fmincon* of MATLAB®.
+Furthermore a comparison between these two approaches is given. All solutions are computed by means of *fmincon* in MATLAB®.
 ## Point Stabilization
 |Single Shooting |Multiple Shooting |
 | ------------- | ------------- |
-|<img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/single_comp.svg" width="500" height="500"> | <img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/multi_comp.svg" width="500" height="500"> |
+|<img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/single_comp.svg" width="300" height="300"> | <img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/multi_comp.svg" width="300" height="300"> |
 
 
 ## Trajectory Tracking
-An example of a Trajectory Tracking, solved with Single Shooting approach, is showed in the following figure:
+An example of a Trajectory Tracking, solved with Single Shooting approach, is shown in the following figure:
+
 <img src="https://github.com/DT-Repo/NMPC_Differential_Drive_Robot/blob/master/Images/traj_trek.svg?raw=true" width="500" height="500">
 
  
